@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.example.whatsappclone.fragment.ChamadasFragment;
 import com.example.whatsappclone.fragment.ConversasFragment;
+import com.example.whatsappclone.fragment.StatusFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -20,8 +22,10 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0:
-                return new ConversasFragment();
+            case 1:
+                return new StatusFragment();
+            case 2:
+                return new ChamadasFragment();
             default:
                 return new ConversasFragment();
         }
