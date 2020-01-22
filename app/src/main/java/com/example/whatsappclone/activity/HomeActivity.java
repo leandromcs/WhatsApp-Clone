@@ -14,7 +14,7 @@ import com.example.whatsappclone.adapter.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private TabLayout tb;
     private ViewPager vw;
