@@ -43,5 +43,7 @@ public class ConversasFragment extends Fragment {
         conversas.add(conversa2);
         ConversaAdapter adapter = new ConversaAdapter(conversas);
         this.rv.setAdapter(adapter);
+
+        this.rv.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     }
 }
