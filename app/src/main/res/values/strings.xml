@@ -3,4 +3,5 @@
     <string name="tab_text_1">Conversas</string>
     <string name="tab_text_2">Status</string>
     <string name="tab_text_3">Chamadas</string>
+    <string name="phone_auth_preferences">PhoneAuthPreferences</string>
 </resources>
