@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Verificar o número de telefone"
+        android:text="Insira seu número de telefone"
         android:textColor="@color/colorPrimary"
         android:textSize="23sp"
         android:textStyle="bold"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="O WhatsApp vai te mandar uma mensagem SMS \n para verificar seu número de telefone. \n Insira o código do seu país e o \n seu número de telefone "
+        android:text="O WhatsApp enviará uma mensagem SMS para\n confirmar seu número de telefone."
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -47,6 +47,7 @@
         android:hint="Cód"
         android:maxLength="2"
         android:textAlignment="center"
+        android:inputType="number"
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_descricao" />
@@ -60,6 +61,7 @@
         android:hint="Num de telefone"
         android:maxLength="14"
         android:textAlignment="center"
+        android:inputType="number"
         app:backgroundTint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_descricao" />

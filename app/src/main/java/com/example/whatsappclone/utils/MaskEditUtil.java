@@ -11,6 +11,7 @@ public abstract class MaskEditUtil {
     public static final String FORMAT_CEP = "#####-###";
     public static final String FORMAT_DATE = "##/##/####";
     public static final String FORMAT_HOUR = "##:##";
+    public static final String FORMAT_AUTH_CODE = "### ###";
 
     /**
      * Método que deve ser chamado para realizar a formatação
@@ -60,6 +61,6 @@ public abstract class MaskEditUtil {
     }
 
     public static String unmask(final String s) {
-        return s.replaceAll("[.]", "").replaceAll("[-]", "").replaceAll("[/]", "").replaceAll("[(]", "").replaceAll("[ ]","").replaceAll("[:]", "").replaceAll("[)]", "");
+        return s.replaceAll("[.]", "").replaceAll("[-]", "").replaceAll("[/]", "").replaceAll("[(]", "").replaceAll("[ ]","").replaceAll("[:]", "").replaceAll("[)]", "").replaceAll("\\s", "");
     }
 }
