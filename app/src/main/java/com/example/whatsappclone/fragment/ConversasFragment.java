@@ -1,7 +1,9 @@
 package com.example.whatsappclone.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -13,10 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.whatsappclone.R;
+import com.example.whatsappclone.activity.ChatActivity;
 import com.example.whatsappclone.adapter.ConversaAdapter;
 import com.example.whatsappclone.model.Conversa;
+import com.example.whatsappclone.model.Mensagem;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ConversasFragment extends Fragment {
@@ -36,12 +41,12 @@ public class ConversasFragment extends Fragment {
         this.rv = getView().findViewById(R.id.rv_conversas);
         this.rv.setHasFixedSize(true);
         this.rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        List<Conversa> conversas = new ArrayList<>();
-        Conversa conversa1 = new Conversa("Leandro", "Bom dia", "23:59");
-        Conversa conversa2 = new Conversa("Joãozinho", "Bom dia", "00:00");
-        conversas.add(conversa1);
-        conversas.add(conversa2);
-        ConversaAdapter adapter = new ConversaAdapter(conversas);
+        List<Mensagem> mensagens = new ArrayList<>();
+        Mensagem mensagem1 = new Mensagem("Leandro", "Joãozinho", "Testando 123", new Date());
+        Mensagem mensagem2 = new Mensagem("Leandro", "Joãozinho", "321 Testando", new Date());
+        mensagens.add(mensagem1);
+        mensagens.add(mensagem2);
+        ConversaAdapter adapter = new ConversaAdapter(mensagens);
         this.rv.setAdapter(adapter);
 
         this.rv.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));

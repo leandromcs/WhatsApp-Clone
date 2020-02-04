@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".activity.HomeActivity">
+
+    <item
+        android:icon="@drawable/lupa"
+        android:title="lupa"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_new_group"
+        android:title="Novo grupo"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_new_transmission"
+        android:title="Nova transmissão"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_whatsapp_web"
+        android:title="WhatsApp Web"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_favorite_messages"
+        android:title="Mensagens favoritas"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="Configurações"
+        app:showAsAction="never"/>
+
+</menu>

@@ -20,7 +20,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.HomeActivity"
-                  android:label="Home"
+                  android:label="WhatsApp"
+                  android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.ChatActivity"
+                  android:label="Chat"
                   android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 

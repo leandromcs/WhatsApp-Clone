@@ -7,16 +7,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.whatsappclone.R;
 import com.example.whatsappclone.model.Conversa;
+import com.example.whatsappclone.model.Mensagem;
 import com.example.whatsappclone.viewholder.ConversasViewHolder;
 
 import java.util.List;
 
 public class ConversaAdapter extends RecyclerView.Adapter<ConversasViewHolder> {
 
-    private final List<Conversa> conversas;
+    private final List<Mensagem> mensagens;
 
-    public ConversaAdapter(List<Conversa> conversas) {
-        this.conversas = conversas;
+    public ConversaAdapter(List<Mensagem> mensagens) {
+        this.mensagens = mensagens;
     }
 
     @Override
@@ -27,13 +28,13 @@ public class ConversaAdapter extends RecyclerView.Adapter<ConversasViewHolder> {
 
     @Override
     public void onBindViewHolder(ConversasViewHolder holder, int position) {
-        holder.nome.setText(this.conversas.get(position).getNome());
-        holder.ultimaMensagem.setText(this.conversas.get(position).getUltimaMensagem());
-        holder.horaUltimaMensagem.setText(this.conversas.get(position).getHoraUltimaMensagem());
+        holder.nome.setText("Nome Provisório");
+        holder.ultimaMensagem.setText(this.mensagens.get(this.mensagens.size()-1).getMensagem());
+        holder.horaUltimaMensagem.setText(this.mensagens.get(this.mensagens.size()-1).getDataMensagem().toString());
     }
 
     @Override
     public int getItemCount() {
-        return conversas != null ? conversas.size() : 0;
+        return mensagens != null ? mensagens.size() : 0;
     }
 }

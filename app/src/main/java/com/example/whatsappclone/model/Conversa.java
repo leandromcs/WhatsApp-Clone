@@ -1,36 +1,20 @@
 package com.example.whatsappclone.model;
 
+import java.util.Map;
+
 public class Conversa {
 
-    private String nome, ultimaMensagem, horaUltimaMensagem;
+    private Map<String, String> participantes;
 
-    public Conversa(String nome, String ultimaMensagem, String horaUltimaMensagem) {
-        this.nome = nome;
-        this.ultimaMensagem = ultimaMensagem;
-        this.horaUltimaMensagem = horaUltimaMensagem;
+    public Conversa(Map<String, String> participantes) {
+        this.participantes = participantes;
     }
 
-    public String getNome() {
-        return nome;
+    public Map<String, String> getParticipantes() {
+        return participantes;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getUltimaMensagem() {
-        return ultimaMensagem;
-    }
-
-    public void setUltimaMensagem(String ultimaMensagem) {
-        this.ultimaMensagem = ultimaMensagem;
-    }
-
-    public String getHoraUltimaMensagem() {
-        return horaUltimaMensagem;
-    }
-
-    public void setHoraUltimaMensagem(String horaUltimaMensagem) {
-        this.horaUltimaMensagem = horaUltimaMensagem;
+    public void setParticipantes(Map<String, String> participantes) {
+        this.participantes = participantes;
     }
 }
