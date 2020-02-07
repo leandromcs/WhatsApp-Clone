@@ -1,15 +1,13 @@
 package com.example.whatsappclone.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.whatsappclone.R;
 import com.example.whatsappclone.fragment.AuthFirstStepFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class AuthActivity extends AppCompatActivity {
 
@@ -18,10 +16,9 @@ public class AuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        int auth = sharedPref.getInt(getString(R.string.phone_auth_preferences), 0);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        if(auth == 1) {
+        if(auth.getCurrentUser() != null) {
             Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
         }

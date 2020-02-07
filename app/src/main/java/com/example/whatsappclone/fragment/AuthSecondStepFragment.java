@@ -142,11 +142,6 @@ public class AuthSecondStepFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithCredential:success");
-                            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-                            SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putInt(getString(R.string.phone_auth_preferences), 1);
-                            editor.commit();
-
                             progressDialog.dismiss();
                             Intent intent = new Intent(getActivity(), HomeActivity.class);
                             startActivity(intent);

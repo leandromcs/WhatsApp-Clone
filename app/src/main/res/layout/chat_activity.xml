@@ -30,10 +30,19 @@
             android:layout_marginStart="25dp"
             android:layout_marginBottom="25dp"
             android:text="Leandro"
-            android:fontFamily="helvetica"
+            android:textSize="16sp"
             android:textColor="#FFF"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_chat"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/et_mensagem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/chat_toolbar" />
 
     <EditText
         android:id="@+id/et_mensagem"
@@ -43,6 +52,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/chat_input_shape"
+        android:hint="Digite uma mensagem"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_enviar"
         app:layout_constraintStart_toStartOf="parent" />
@@ -53,9 +63,9 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_mic"
         app:fabSize="mini"
-        android:backgroundTint="@color/colorPrimaryDark"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

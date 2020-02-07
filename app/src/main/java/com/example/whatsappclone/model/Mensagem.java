@@ -9,6 +9,9 @@ public class Mensagem {
     private String mensagem;
     private Date dataMensagem;
 
+    public Mensagem() {
+    }
+
     public Mensagem(String origem, String destino, String mensagem, Date dataMensagem) {
         this.origem = origem;
         this.destino = destino;
