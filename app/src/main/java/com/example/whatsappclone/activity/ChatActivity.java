@@ -12,23 +12,37 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.whatsappclone.R;
+import com.example.whatsappclone.adapter.ChatAdapter;
+import com.example.whatsappclone.model.Conversa;
+import com.example.whatsappclone.model.Mensagem;
 import com.example.whatsappclone.service.ChatService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
     private EditText mensagem;
     private FloatingActionButton btnEnviar;
     private ChatService service = new ChatService();
+
     private RecyclerView rv;
+    private ChatAdapter adapter;
+
+    private Conversa conversa;
+    private List<Mensagem> mensagens;
+    private Boolean firstTime = true;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -43,12 +57,26 @@ public class ChatActivity extends AppCompatActivity {
 
         this.btnEnviar = findViewById(R.id.btn_enviar);
         this.mensagem = findViewById(R.id.et_mensagem);
+
         this.rv = findViewById(R.id.rv_chat);
+        this.rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         database.getReference("conversas").orderByKey().equalTo(auth.getCurrentUser().getPhoneNumber() + "-" + "+5561123456789").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    conversa = snapshot.getValue(Conversa.class);
+                    if(firstTime) {
+                        mensagens = new ArrayList<>(conversa.getMensagens().values());
+                        adapter = new ChatAdapter(mensagens);
+                        rv.setAdapter(adapter);
+                        firstTime = false;
+                    } else {
+                        Mensagem novaMensagem = new ArrayList<>(conversa.getMensagens().values()).get(mensagens.size());
+                        mensagens.add(novaMensagem);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
             }
 
             @Override
@@ -82,6 +110,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 service.enviarMensagem(mensagem.getText().toString());
+                mensagem.setText("");
             }
         });
     }
@@ -96,7 +125,6 @@ public class ChatActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
-                // User chose the "Settings" item, show the app settings UI...
                 return true;
 
             default:

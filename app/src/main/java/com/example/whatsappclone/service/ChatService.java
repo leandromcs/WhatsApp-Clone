@@ -13,7 +13,6 @@ public class ChatService {
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public void enviarMensagem(String mensagem) {
-
         String conversaKey = auth.getCurrentUser().getPhoneNumber() + "-" + "+5561123456789";
         DatabaseReference conversaRef = database.getReference("conversas").child(conversaKey);
 

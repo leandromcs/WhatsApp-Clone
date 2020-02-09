@@ -1,6 +1,7 @@
 package com.example.whatsappclone.model;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class Conversa {
 
@@ -24,5 +25,18 @@ public class Conversa {
 
     public void setMensagens(Map<String, Mensagem> mensagens) {
         this.mensagens = mensagens;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Conversa conversa = (Conversa) o;
+        return mensagens.equals(conversa.mensagens);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mensagens);
     }
 }
