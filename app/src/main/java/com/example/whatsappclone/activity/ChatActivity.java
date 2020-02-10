@@ -25,10 +25,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
@@ -41,7 +42,7 @@ public class ChatActivity extends AppCompatActivity {
     private ChatAdapter adapter;
 
     private Conversa conversa;
-    private List<Mensagem> mensagens;
+    private List<Mensagem> mensagens = new ArrayList<>();
     private Boolean firstTime = true;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -61,21 +62,26 @@ public class ChatActivity extends AppCompatActivity {
         this.rv = findViewById(R.id.rv_chat);
         this.rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        database.getReference("conversas").orderByKey().equalTo(auth.getCurrentUser().getPhoneNumber() + "-" + "+5561123456789").addValueEventListener(new ValueEventListener() {
+        database.getReference("conversas").child(auth.getCurrentUser().getPhoneNumber() + "-" + "+5561123456789").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    conversa = snapshot.getValue(Conversa.class);
-                    if(firstTime) {
-                        mensagens = new ArrayList<>(conversa.getMensagens().values());
-                        adapter = new ChatAdapter(mensagens);
-                        rv.setAdapter(adapter);
-                        firstTime = false;
-                    } else {
-                        Mensagem novaMensagem = new ArrayList<>(conversa.getMensagens().values()).get(mensagens.size());
-                        mensagens.add(novaMensagem);
-                        adapter.notifyDataSetChanged();
-                    }
+                conversa = dataSnapshot.getValue(Conversa.class);
+                if (firstTime && conversa != null) {
+                    mensagens = new ArrayList<>(conversa.getMensagens().values());
+                    ordenarMensagensPorData();
+                    adapter = new ChatAdapter(mensagens);
+                    rv.setAdapter(adapter);
+                    firstTime = false;
+                } else if(conversa != null) {
+                    List<Mensagem> novasMensagens = new ArrayList<>(conversa.getMensagens().values());
+                    Collections.sort(novasMensagens, new Comparator<Mensagem>() {
+                        @Override
+                        public int compare(Mensagem o1, Mensagem o2) {
+                            return o1.getDataMensagem().compareTo(o2.getDataMensagem());
+                        }
+                    });
+                    mensagens.add(novasMensagens.get(novasMensagens.size() - 1));
+                    adapter.notifyDataSetChanged();
                 }
             }
 
@@ -130,5 +136,14 @@ public class ChatActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void ordenarMensagensPorData() {
+        Collections.sort(mensagens, new Comparator<Mensagem>() {
+            @Override
+            public int compare(Mensagem m1, Mensagem m2) {
+                return m1.getDataMensagem().compareTo(m2.getDataMensagem());
+            }
+        });
     }
 }

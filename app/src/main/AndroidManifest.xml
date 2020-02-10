@@ -24,8 +24,7 @@
                   android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.ChatActivity"
                   android:label="Chat"
-                  android:theme="@style/AppTheme.NoActionBar"
-                  android:windowSoftInputMode="adjustPan"/>
+                  android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

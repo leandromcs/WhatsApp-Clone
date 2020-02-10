@@ -30,7 +30,7 @@ public class ConversaAdapter extends RecyclerView.Adapter<ConversasViewHolder> {
     public void onBindViewHolder(ConversasViewHolder holder, int position) {
         holder.nome.setText("Nome Provisório");
         holder.ultimaMensagem.setText(this.mensagens.get(this.mensagens.size()-1).getMensagem());
-        holder.horaUltimaMensagem.setText(this.mensagens.get(this.mensagens.size()-1).getDataMensagem().toString());
+        holder.horaUltimaMensagem.setText(this.mensagens.get(this.mensagens.size()-1).getDataMensagem().getHours() + ":" + this.mensagens.get(this.mensagens.size()-1).getDataMensagem().getMinutes());
     }
 
     @Override
