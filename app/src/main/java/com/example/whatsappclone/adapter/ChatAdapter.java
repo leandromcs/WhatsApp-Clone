@@ -1,10 +1,11 @@
 package com.example.whatsappclone.adapter;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.whatsappclone.R;
@@ -21,6 +22,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolder> {
 
     public ChatAdapter(List<Mensagem> mensagens) {
         this.mensagens = mensagens;
+        this.auth = FirebaseAuth.getInstance();
     }
 
     @NonNull
@@ -34,11 +36,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolder> {
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         holder.mensagem.setText(mensagens.get(position).getMensagem());
 
-        if(auth.getCurrentUser().getPhoneNumber() == mensagens.get(position).getOrigem()) {
-            //holder.mensagem.setBackgroundColor();
+        if(auth.getCurrentUser().getPhoneNumber().equals(mensagens.get(position).getOrigem())) {
+            holder.ll_chat_content.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.chat_shape_origin));
+            holder.ll_chat_item.setGravity(Gravity.END);
         }
 
-        holder.hora.setText(Integer.toString(mensagens.get(position).getDataMensagem().getHours()) + ":" + Integer.toString(mensagens.get(position).getDataMensagem().getMinutes()));
+        holder.hora.setText(mensagens.get(position).getDataMensagem().getHours() + ":" + mensagens.get(position).getDataMensagem().getMinutes());
     }
 
     @Override

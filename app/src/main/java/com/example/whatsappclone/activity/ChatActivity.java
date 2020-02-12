@@ -20,6 +20,7 @@ import com.example.whatsappclone.adapter.ChatAdapter;
 import com.example.whatsappclone.model.Conversa;
 import com.example.whatsappclone.model.Mensagem;
 import com.example.whatsappclone.service.ChatService;
+import com.example.whatsappclone.utils.FirebaseUtils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,7 +44,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private Conversa conversa;
     private List<Mensagem> mensagens = new ArrayList<>();
-    private Boolean firstTime = true;
+
+    private Boolean firstMessage = true;
 
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -62,27 +64,31 @@ public class ChatActivity extends AppCompatActivity {
         this.rv = findViewById(R.id.rv_chat);
         this.rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        database.getReference("conversas").child(auth.getCurrentUser().getPhoneNumber() + "-" + "+5561123456789").addValueEventListener(new ValueEventListener() {
+        database.getReference("conversas").child(FirebaseUtils.createConversaKey(auth.getCurrentUser().getPhoneNumber(), "+5561984099901")).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 conversa = dataSnapshot.getValue(Conversa.class);
-                if (firstTime && conversa != null) {
-                    mensagens = new ArrayList<>(conversa.getMensagens().values());
-                    ordenarMensagensPorData();
-                    adapter = new ChatAdapter(mensagens);
-                    rv.setAdapter(adapter);
-                    firstTime = false;
-                } else if(conversa != null) {
-                    List<Mensagem> novasMensagens = new ArrayList<>(conversa.getMensagens().values());
-                    Collections.sort(novasMensagens, new Comparator<Mensagem>() {
-                        @Override
-                        public int compare(Mensagem o1, Mensagem o2) {
-                            return o1.getDataMensagem().compareTo(o2.getDataMensagem());
-                        }
-                    });
-                    mensagens.add(novasMensagens.get(novasMensagens.size() - 1));
-                    adapter.notifyDataSetChanged();
+
+                if (conversa != null) {
+                    if (firstMessage) {
+                        mensagens = new ArrayList<>(conversa.getMensagens().values());
+                        ordenarMensagensPorData();
+                        adapter = new ChatAdapter(mensagens);
+                        rv.setAdapter(adapter);
+                        firstMessage = false;
+                    } else {
+                        List<Mensagem> novasMensagens = new ArrayList<>(conversa.getMensagens().values());
+                        Collections.sort(novasMensagens, new Comparator<Mensagem>() {
+                            @Override
+                            public int compare(Mensagem o1, Mensagem o2) {
+                                return o1.getDataMensagem().compareTo(o2.getDataMensagem());
+                            }
+                        });
+                        mensagens.add(novasMensagens.get(novasMensagens.size() - 1));
+                        adapter.notifyDataSetChanged();
+                    }
                 }
+
             }
 
             @Override
