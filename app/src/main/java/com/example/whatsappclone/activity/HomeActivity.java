@@ -1,8 +1,10 @@
 package com.example.whatsappclone.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.whatsappclone.R;
 import com.example.whatsappclone.adapter.ViewPagerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 
@@ -18,6 +21,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private TabLayout tb;
     private ViewPager vw;
+    private FloatingActionButton contactButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,14 @@ public class HomeActivity extends AppCompatActivity {
 
         this.vw = findViewById(R.id.pager);
         this.tb = findViewById(R.id.tabLayout);
+        this.contactButton = findViewById(R.id.floatingActionButton);
+
+        this.contactButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ContactsActivity.class));
+            }
+        });
 
         this.vw.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         this.tb.setupWithViewPager(this.vw);

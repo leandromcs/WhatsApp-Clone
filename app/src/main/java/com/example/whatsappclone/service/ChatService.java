@@ -13,14 +13,14 @@ public class ChatService {
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    public void enviarMensagem(String mensagem) {
-        String conversaKey = FirebaseUtils.createConversaKey(auth.getCurrentUser().getPhoneNumber(), "+5561984099901");
+    public void enviarMensagem(String mensagem, String destino) {
+        String conversaKey = FirebaseUtils.createConversaKey(auth.getCurrentUser().getPhoneNumber(), destino);
         DatabaseReference conversaRef = database.getReference("conversas").child(conversaKey);
 
         DatabaseReference mensagensRef = conversaRef.child("mensagens");
         String mensagemKey = mensagensRef.push().getKey();
         DatabaseReference mensagemRef = mensagensRef.child(mensagemKey);
-        Mensagem msg = new Mensagem(auth.getCurrentUser().getPhoneNumber(), "+5561984099901", mensagem, new Date());
+        Mensagem msg = new Mensagem(auth.getCurrentUser().getPhoneNumber(), destino, mensagem, new Date());
         mensagemRef.setValue(msg);
     }
 }

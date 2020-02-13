@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,6 +36,7 @@ import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
+    private TextView nome;
     private EditText mensagem;
     private FloatingActionButton btnEnviar;
     private ChatService service = new ChatService();
@@ -44,6 +46,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private Conversa conversa;
     private List<Mensagem> mensagens = new ArrayList<>();
+    private String destino;
 
     private Boolean firstMessage = true;
 
@@ -60,11 +63,16 @@ public class ChatActivity extends AppCompatActivity {
 
         this.btnEnviar = findViewById(R.id.btn_enviar);
         this.mensagem = findViewById(R.id.et_mensagem);
+        this.nome = findViewById(R.id.tv_nome);
+
+        Bundle b = getIntent().getExtras();
+        this.nome.setText(b.getString("nome"));
+        this.destino = this.formatarTelefone(b.getString("tel"));
 
         this.rv = findViewById(R.id.rv_chat);
         this.rv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        database.getReference("conversas").child(FirebaseUtils.createConversaKey(auth.getCurrentUser().getPhoneNumber(), "+5561984099901")).addValueEventListener(new ValueEventListener() {
+        database.getReference("conversas").child(FirebaseUtils.createConversaKey(auth.getCurrentUser().getPhoneNumber(), destino)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 conversa = dataSnapshot.getValue(Conversa.class);
@@ -121,7 +129,7 @@ public class ChatActivity extends AppCompatActivity {
         this.btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                service.enviarMensagem(mensagem.getText().toString());
+                service.enviarMensagem(mensagem.getText().toString(), destino);
                 mensagem.setText("");
             }
         });
@@ -142,6 +150,19 @@ public class ChatActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private String formatarTelefone(String telefone) {
+        if(telefone.length() != 14){
+            if(telefone.length() == 9) {
+                return "+55" + "61" + telefone;
+            }
+
+            if(telefone.length() == 11) {
+                return "+55" + telefone;
+            }
+        }
+        return telefone;
     }
 
     private void ordenarMensagensPorData() {

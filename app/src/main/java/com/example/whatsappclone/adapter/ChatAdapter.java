@@ -13,6 +13,9 @@ import com.example.whatsappclone.model.Mensagem;
 import com.example.whatsappclone.viewholder.ChatViewHolder;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolder> {
@@ -41,7 +44,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatViewHolder> {
             holder.ll_chat_item.setGravity(Gravity.END);
         }
 
-        holder.hora.setText(mensagens.get(position).getDataMensagem().getHours() + ":" + mensagens.get(position).getDataMensagem().getMinutes());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String dataFormatada = sdf.format(mensagens.get(position).getDataMensagem());
+
+        holder.hora.setText(dataFormatada);
     }
 
     @Override

@@ -11,17 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.whatsappclone.R;
 import com.example.whatsappclone.activity.ChatActivity;
 
-public class ConversasViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class ContactsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    public TextView nome, ultimaMensagem, horaUltimaMensagem;
+    public TextView nome, tel;
     public ImageView foto;
-    public String participantes;
 
-    public ConversasViewHolder(@NonNull View itemView) {
+    public ContactsViewHolder(@NonNull View itemView) {
         super(itemView);
         this.nome = itemView.findViewById(R.id.tv_nome);
-        this.ultimaMensagem = itemView.findViewById(R.id.tv_ultima_mensagem);
-        this.horaUltimaMensagem = itemView.findViewById(R.id.tv_hora_ultima_mensagem);
+        this.tel = itemView.findViewById(R.id.tv_tel);
         this.foto = itemView.findViewById(R.id.iv_foto);
 
         itemView.setOnClickListener(this);
@@ -30,8 +28,8 @@ public class ConversasViewHolder extends RecyclerView.ViewHolder implements View
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(v.getContext(), ChatActivity.class);
-        intent.putExtra("nome", this.participantes);
-        intent.putExtra("tel", nome.getText());
+        intent.putExtra("nome", nome.getText());
+        intent.putExtra("tel", tel.getText());
         v.getContext().startActivity(intent);
     }
 }

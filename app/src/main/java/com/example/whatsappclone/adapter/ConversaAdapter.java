@@ -10,14 +10,16 @@ import com.example.whatsappclone.model.Conversa;
 import com.example.whatsappclone.model.Mensagem;
 import com.example.whatsappclone.viewholder.ConversasViewHolder;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ConversaAdapter extends RecyclerView.Adapter<ConversasViewHolder> {
 
-    private final List<Mensagem> mensagens;
+    private final List<Conversa> conversas;
 
-    public ConversaAdapter(List<Mensagem> mensagens) {
-        this.mensagens = mensagens;
+    public ConversaAdapter(List<Conversa> conversas) {
+        this.conversas = conversas;
     }
 
     @Override
@@ -28,13 +30,21 @@ public class ConversaAdapter extends RecyclerView.Adapter<ConversasViewHolder> {
 
     @Override
     public void onBindViewHolder(ConversasViewHolder holder, int position) {
-        holder.nome.setText("Nome Provisório");
-        holder.ultimaMensagem.setText(this.mensagens.get(this.mensagens.size()-1).getMensagem());
-        holder.horaUltimaMensagem.setText(this.mensagens.get(this.mensagens.size()-1).getDataMensagem().getHours() + ":" + this.mensagens.get(this.mensagens.size()-1).getDataMensagem().getMinutes());
+        List<Mensagem> mensagens = new ArrayList<>(this.conversas.get(position).getMensagens().values());
+
+        holder.nome.setText(mensagens.get(0).getDestino());
+        holder.ultimaMensagem.setText(mensagens.get(this.conversas.get(position).getMensagens().size() - 1).getMensagem());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        String dataFormatada = sdf.format(mensagens.get(this.conversas.get(position).getMensagens().size() - 1).getDataMensagem());
+
+        holder.horaUltimaMensagem.setText(dataFormatada);
+
+        holder.participantes = this.conversas.get(position).getParticipantes();
     }
 
     @Override
     public int getItemCount() {
-        return mensagens != null ? mensagens.size() : 0;
+        return conversas != null ? conversas.size() : 0;
     }
 }
